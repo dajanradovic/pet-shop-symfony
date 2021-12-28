@@ -9,7 +9,7 @@
         </div>
         <div class="col-sm-8" id="main-content">
             {% for pet in pets %}
-                    <div class="card mb-4" style="width: 100%;">
+                    <div class="card mb-4 mt-3" style="width: 100%;">
                         {% if pet.getPhotos() is null %}
                             <img class="card-img-top" src="{{ asset('images/No_image_available.png') }}" alt="Card image cap">
 
