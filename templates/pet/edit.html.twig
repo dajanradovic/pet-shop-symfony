@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+     <script src="{{asset('js/pet_edit.js')}}" defer></script> 
+{% endblock %}
+
+{% block body %}
+
+{% for message in app.flashes('notice') %}
+    <div class="alert alert-success" role="alert">
+ {{message}}
+</div>
+{% endfor %}
+ 
+
+   {{ form_start(form, {'method': 'POST', 'multipart' : true}) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.age) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.pet_photos) }}
+        {{ form_row(form.photos_to_remove, {'id' : 'photos_to_remove'}) }}
+
+
+        {% if pet.getPhotos() is null %}
+
+            {% else %}
+                    <hr>
+                    <p id="remove-photos">Click on photos you want to remove</p>
+                    <div id="all-images">
+                        {% for single in pet.getPhotos() %}
+                                <img src="{{asset('uploads/pets_images/' ~ single)}}" alt="..." class="img-thumbnail overlay">
+                        {% endfor %}
+                    </div>
+
+                    <hr>
+
+            {% endif %}
+       
+        
+   {{ form_end(form) }}
+    
+<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+<script>
+    $(document).ready(function () {
+        bsCustomFileInput.init()
+    })
+</script>
+{% endblock %}
