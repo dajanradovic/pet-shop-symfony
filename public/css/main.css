@@ -14,4 +14,31 @@
     max-width: 200px;
     height:auto;
     max-height: 200px;
+    margin: 10px;
+}
+
+.card-img-top{
+
+    width: 90%;
+    margin: 20px;
+}
+
+#name-age{
+
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#remove-photos{
+
+    font-weight: bold;
+    font-size:14px;
+}
+
+.created_at{
+
+    text-align: right;
+    width:100%;
+    font-size:12px;
 }
