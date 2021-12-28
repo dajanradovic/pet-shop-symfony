@@ -2,3 +2,16 @@
 
     opacity: 0.4;
 }
+
+#all-images{
+
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.overlay{
+
+    max-width: 200px;
+    height:auto;
+    max-height: 200px;
+}
