@@ -41,7 +41,7 @@ class FileUploader
     }
 
     public function deletePhoto(string $name): void{
-
+        if($name  )
         $this->fileSystem->remove($this->getTargetDirectory() . '/' . $name);
     }
 }

@@ -15,6 +15,7 @@ class HomeController extends AbstractController
      */
     public function index(ManagerRegistry $doctrine): Response
     {
+
         $pets = $doctrine->getRepository(Pet::class)->findAll();
 
         return $this->render('home/index.html.twig', [

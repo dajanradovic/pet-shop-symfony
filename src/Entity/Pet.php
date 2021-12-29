@@ -118,9 +118,9 @@ class Pet
         return $this;
     }
 
-    public function filterPhotosToRemove(array $photosToRemove) : array {
+    public function filterPhotosToRemove(array $photosToRemove = []) : array {
         
-        $filteredArray = array_diff($this->getPhotos(), $photosToRemove);
+        $filteredArray = array_values(array_diff($this->getPhotos() ?? [], $photosToRemove));
         return $filteredArray;
     }
 }

@@ -9,8 +9,8 @@
         </div>
         <div class="col-sm-8" id="main-content">
             {% for pet in pets %}
-                    <div class="card mb-4 mt-3" style="width: 100%;">
-                        {% if pet.getPhotos() is null %}
+                    <div class="card mb-4 mt-3" style="width: 70%;">
+                        {% if pet.getPhotos() is null or pet.getPhotos is empty %}
                             <img class="card-img-top" src="{{ asset('images/No_image_available.png') }}" alt="Card image cap">
 
 							{% else %}
@@ -22,7 +22,7 @@
                             <h5 class="card-title">{{pet.name}}</h5>
                             <h6 class="card-title">{{pet.age}} months old</h6>
                             </div>
-                            <a href="{{ path('pets_edit', {id:pet.id}) }}" class="btn btn-warning">More details</a>
+                            <a href="{{ path('pets_details', {id:pet.id}) }}" class="btn btn-warning btn-sm">Details</a>
                             <p class="created_at"><i>created at: {{pet.createdAt|date("d/m/Y")}}</i></p>
 
                         </div>

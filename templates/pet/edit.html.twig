@@ -21,7 +21,7 @@
         {{ form_row(form.photos_to_remove, {'id' : 'photos_to_remove'}) }}
 
 
-        {% if pet.getPhotos() is null %}
+        {% if pet.getPhotos() is null or pet.getPhotos() is empty %}
 
             {% else %}
                     <hr>

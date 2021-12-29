@@ -60,7 +60,7 @@ class PetController extends AbstractController
     }
 
     /**
-     * @Route("/pets/{id}", name="edit")
+     * @Route("/edit/{id}", name="edit")
      */
     public function edit(Pet $id, Request $request, ManagerRegistry $doctrine, FileUploader $fileUploader) 
     {
@@ -76,11 +76,11 @@ class PetController extends AbstractController
             //$id = $form->getData();
 
             $photosToRemoveArray = explode(',', $request->request->get('pet')['photos_to_remove']);
-        
             $filteredArrayWithRemovedPhotos = $id->filterPhotosToRemove($photosToRemoveArray);
-
             foreach($photosToRemoveArray as $photo){
-                $fileUploader->deletePhoto($photo);
+                if($photo && $photo != ''){
+                    $fileUploader->deletePhoto($photo);
+                }
             }
 
             if ($petsFile) {
@@ -91,10 +91,9 @@ class PetController extends AbstractController
                     $petFileName = $fileUploader->upload($petFile);
                     $filteredArrayWithRemovedPhotos[] = $petFileName;
                 }
-                
-                $id->setPhotos($filteredArrayWithRemovedPhotos);
-            
             }
+            $id->setPhotos($filteredArrayWithRemovedPhotos);
+
             
             $entityManager = $doctrine->getManager();
             
@@ -110,6 +109,17 @@ class PetController extends AbstractController
             'form' => $form,
             'pet' => $pet
         ]);
+    }
+
+    /**
+     * @Route("/details/{id}", name="details")
+     */
+    public function details(Pet $id){
+
+        return $this->render('pet/details.html.twig', [
+            'pet' => $id
+         ]);
+
     }
     
 }
