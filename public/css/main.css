@@ -110,3 +110,31 @@ body{
 
     padding: 0px;
   }
+
+  #details-content{
+
+    display:flex;
+    flex-direction: column;
+    
+  }
+
+  .details-subcontent{
+
+    display:flex;
+    justify-content: space-between;
+    border-top:2px solid black;
+  }
+
+  .titles{
+
+    padding: 10px;
+    font-weight: bold;
+    font-size:14px;
+  }
+  .description-content{
+
+    max-width: 500px;
+    overflow-wrap: break-word;
+    padding: 10px;
+    font-size:14px;
+  }
