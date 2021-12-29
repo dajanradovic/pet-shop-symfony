@@ -23,6 +23,10 @@
                             <h6 class="card-title">{{pet.age}} months old</h6>
                             </div>
                             <a href="{{ path('pets_details', {id:pet.id}) }}" class="btn btn-warning btn-sm">Details</a>
+                            {% if app.user is same as pet.user %}
+                                <a href="{{ path('pets_edit', {id:pet.id}) }}" class="btn btn-primary btn-sm">Edit</a>
+                            {% endif %}
+
                             <p class="created_at"><i>created at: {{pet.createdAt|date("d/m/Y")}}</i></p>
 
                         </div>

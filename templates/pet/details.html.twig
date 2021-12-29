@@ -5,31 +5,29 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row">
-  <div class="column">
-    <img src="img_nature.jpg" alt="Nature" onclick="myFunction(this);">
-  </div>
-  <div class="column">
-    <img src="img_snow.jpg" alt="Snow" onclick="myFunction(this);">
-  </div>
-  <div class="column">
-    <img src="img_mountains.jpg" alt="Mountains" onclick="myFunction(this);">
-  </div>
-  <div class="column">
-    <img src="img_lights.jpg" alt="Lights" onclick="myFunction(this);">
-  </div>
-</div>
+<div id="details-wrapper" class="mt-4">
+  <div class="row ml-2 mr-2">
+  {% if pet.getPhotos() is null or pet.getPhotos() is empty %}
+
+            {% else %}
+                        {% for single in pet.getPhotos() %}
+                        <div class="column">
+                            <img src="{{asset('uploads/pets_images/' ~ single)}}" alt="..." onclick="myFunction(this);">
+                        </div>
+                        {% endfor %}
+
+  {% endif %}
+ </div>
 
 <!-- The expanding image container -->
 <div class="container-gallery">
   <!-- Close the image -->
-  <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
 
   <!-- Expanded image -->
-  <img id="expandedImg" style="width:100%">
+  <img id="expandedImg" style="width:80%" src="{{asset('uploads/pets_images/' ~ pet.getPhotos()[0])}}" alt="...">
 
-  <!-- Image text -->
-  <div id="imgtext"></div>
+  
+</div>
 </div>
 
 {% endblock %}

@@ -51,11 +51,8 @@ body{
 }
 
 
-
  /* The grid: Four equal columns that floats next to each other */
  .column {
-    float: left;
-    width: 25%;
     padding: 10px;
   }
   
@@ -63,6 +60,8 @@ body{
   .column img {
     opacity: 0.8;
     cursor: pointer;
+    width:100px;
+    height:100px;
   }
   
   .column img:hover {
@@ -79,18 +78,10 @@ body{
   /* The expanding image container (positioning is needed to position the close button and the text) */
   .container-gallery {
     position: relative;
-    display: none;
+    text-align: center;
   }
   
-  /* Expanding image text */
-  #imgtext {
-    position: absolute;
-    bottom: 15px;
-    left: 15px;
-    color: white;
-    font-size: 20px;
-  }
-  
+   
   /* Closable button inside the image */
   .closebtn {
     position: absolute;
@@ -100,3 +91,22 @@ body{
     font-size: 35px;
     cursor: pointer;
   } 
+
+  #expandedImg{
+
+    max-height: 600px;
+  }
+
+  #details-wrapper{
+
+    border: 1px solid black;
+    border-radius: 5px;
+    padding:10px;
+    background-color: #d9bd6b;
+    min-height:900px;
+  }
+
+  .image-thumbnail-details{
+
+    padding: 0px;
+  }
