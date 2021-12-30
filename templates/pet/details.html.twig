@@ -24,7 +24,7 @@
   <!-- Close the image -->
 
   <!-- Expanded image -->
-  <img id="expandedImg" style="width:80%" src="{{asset('uploads/pets_images/' ~ pet.getPhotos()[0])}}" alt="...">
+  <img id="expandedImg" style="width:80%; height: 500px;" src="{{asset('uploads/pets_images/' ~ pet.getPhotos()[0])}}" alt="...">
 
   
 </div>
@@ -36,6 +36,10 @@
   <div class="details-subcontent">
     <span class="titles">Description:</span>
     <span class="description-content">{{pet.description}}</span>
+  </div>
+  <div class="details-subcontent">
+    <span class="titles">Added on:</span>
+    <span class="description-content">{{pet.createdAt|date("d/m/Y")}}</span>
   </div>
 </div>
 </div>

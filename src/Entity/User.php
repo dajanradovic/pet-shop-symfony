@@ -65,6 +65,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $updated_at;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $avatar;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $Age;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Interests;
+
     public function __construct()
     {
         $this->pets = new ArrayCollection();
@@ -197,6 +217,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $pet->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getAge(): ?int
+    {
+        return $this->Age;
+    }
+
+    public function setAge(?int $Age): self
+    {
+        $this->Age = $Age;
+
+        return $this;
+    }
+
+    public function getInterests(): ?string
+    {
+        return $this->Interests;
+    }
+
+    public function setInterests(?string $Interests): self
+    {
+        $this->Interests = $Interests;
 
         return $this;
     }

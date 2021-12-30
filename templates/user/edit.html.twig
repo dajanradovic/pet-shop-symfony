@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% for message in app.flashes('notice') %}
+    <div class="alert alert-success" role="alert">
+ {{message}}
+</div>
+{% endfor %}
+ 
+
+   {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.age) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.interests) }}
+
+        {{ form_row(form.plainPassword) }}
+        
+   {{ form_end(form) }}
+  
+
+{% endblock %}
