@@ -29,19 +29,27 @@
   
 </div>
 <div id="details-content" class="mt-3">
-  <div class="details-subcontent">
-    <span class="titles">Name:</span>
-    <span class="description-content">{{pet.name}}</span>
+    <div class="details-subcontent">
+      <span class="titles">Name:</span>
+      <span class="description-content">{{pet.name}}</span>
+    </div>
+    <div class="details-subcontent">
+      <span class="titles">Description:</span>
+      <span class="description-content">{{pet.description}}</span>
+    </div>
+    <div class="details-subcontent">
+      <span class="titles">Added on:</span>
+      <span class="description-content">{{pet.createdAt|date("d/m/Y")}}</span>
+    </div>
+    <div class="details-subcontent">
+      <span class="titles">Added by:</span>
+      <div class="description-content flex">
+          <img id="user-avatar-small" src="{{asset('uploads/avatars/' ~ pet.getUser().getAvatar())}}" />
+          <span>{{pet.getUser().name}}</span>
+      </div>
+    </div>
   </div>
-  <div class="details-subcontent">
-    <span class="titles">Description:</span>
-    <span class="description-content">{{pet.description}}</span>
-  </div>
-  <div class="details-subcontent">
-    <span class="titles">Added on:</span>
-    <span class="description-content">{{pet.createdAt|date("d/m/Y")}}</span>
-  </div>
-</div>
+
 </div>
 
 {% endblock %}

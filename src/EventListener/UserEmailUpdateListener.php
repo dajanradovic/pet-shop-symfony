@@ -21,8 +21,6 @@ class UserEmailUpdateListener
         $this->emailVerifier = $emailVerifier;
     }
 
-    // the entity listener methods receive two arguments:
-    // the entity instance and the lifecycle event
     public function preUpdate(User $user, LifecycleEventArgs $event): void
     {
         if(isset($event->getEntityChangeSet()['email'])){
@@ -37,7 +35,5 @@ class UserEmailUpdateListener
                 ->htmlTemplate('registration/confirmation_email.html.twig'));
 
         }
-
-       // dd($user);
     }
 }

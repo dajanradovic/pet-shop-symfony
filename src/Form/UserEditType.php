@@ -61,12 +61,7 @@ class UserEditType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('save', SubmitType::class)
-            /*->addEventListener(
-                FormEvents::POST_SUBMIT, [$this, 'onPostSubmit']
-            )*/
-
-        ;
+            ->add('save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -76,28 +71,4 @@ class UserEditType extends AbstractType
         ]);
     }
 
-    public function onPostSubmit(FormEvent $event)
-{
-
-    $entityManager = $this->doctrine->getManager();
-    $uow = $entityManager->getUnitOfWork();
-    $originalUserData = $uow->getEntityChangeSet($this->security->getUser());
-
-    if($event->getData()->getEmail() != $originalUserData['email'])
-    dd($event->getData()->getEmail());
-    //$user = $this->security->getUser();
-//dd($user);
-    //$newData = $event->getData();
-   // $newContent = $newData->getContent();
-    $uow = $this->em->getUnitOfWork();
-    dd($uow);
-    $oldData = $uow->getOriginalEntityData($newData);
-    dd($oldData);
-    //oldContent = $OriginalEntityData["content"];
-
-
-   /* if($newContent != $oldContent) {
-        // ...
-    }*/
-}
 }

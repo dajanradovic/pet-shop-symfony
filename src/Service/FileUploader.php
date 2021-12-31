@@ -40,8 +40,13 @@ class FileUploader
         return $this->targetDirectory;
     }
 
+    public function overrideDefaultTargetDirectory(string $directoryName){
+
+        return $this->targetDirectory = $directoryName;
+    }
+
     public function deletePhoto(string $name): void{
-        if($name  )
+
         $this->fileSystem->remove($this->getTargetDirectory() . '/' . $name);
     }
 }

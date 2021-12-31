@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Form\UserEditType;
+use App\Form\UserAvatarType;
+use App\Service\FileUploader;
 use App\Security\EmailVerifier;
 use Symfony\Component\Mime\Address;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,13 +21,48 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
  */
 class UserController extends AbstractController
 {
-        /**
+    /**
      * @Route("/avatar", name="avatar")
      */
-    public function avatar(): Response
+    public function avatar(Request $request, ManagerRegistry $doctrine, FileUploader $fileUploader): Response
     {
-        return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+
+        $form = $this->createForm(UserAvatarType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $avatar = $form->get('avatar')->getData();
+            
+            if ($avatar) {
+
+                    $fileUploader->overrideDefaultTargetDirectory($this->getParameter('avatar_images_directory'));
+
+                    if ($user->getAvatar()){
+                        
+                        $fileUploader->deletePhoto($user->getAvatar());
+                    }
+
+                    $avatarFileName = $fileUploader->upload($avatar);
+                
+                    $user->setAvatar($avatarFileName);
+            
+            }
+
+            
+            $entityManager = $doctrine->getManager();
+                        
+            $entityManager->flush();
+
+            return $this->redirectToRoute('me_edit');
+        }
+
+        return $this->renderForm('user/avatar.html.twig',[
+            'form' => $form
         ]);
     }
 
@@ -34,13 +71,16 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher, EmailVerifier $emailVerifier): Response
     {
+        /**
+         * @var User $user
+         */
         $user = $this->getUser();
         $form = $this->createForm(UserEditType::class, $user);
 
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            dump("prvi");
+
             $entityManager = $doctrine->getManager();
 
             if($form->get('plainPassword')->getData()){

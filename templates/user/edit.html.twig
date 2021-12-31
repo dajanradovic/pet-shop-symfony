@@ -7,7 +7,19 @@
  {{message}}
 </div>
 {% endfor %}
- 
+   <div id="avatar-row" class="mt-3 mb-3">
+          {% if app.user.getAvatar() is null %}
+              
+               <img id="avatar-image" src="{{ asset('images/No_image_available.png') }}" />
+
+          {% else %}
+
+               <img id="avatar-image" src="{{asset('uploads/avatars/' ~ app.user.getAvatar())}}" />
+
+          {% endif %}
+         
+         <a href="{{ path('me_avatar') }}" class="btn btn-warning btn-sm" id="update-avatar-button">Add/update avatar</a>
+   </div>
 
    {{ form_start(form) }}
         {{ form_row(form.name) }}
