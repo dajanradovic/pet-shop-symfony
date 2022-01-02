@@ -85,9 +85,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $Interests;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UserLike::class, mappedBy="target", orphanRemoval=true)
+     */
+    private $createdLikes;
+
+    /**
+     * @ORM\OneToMany(targetEntity=UserLike::class, mappedBy="author", orphanRemoval=true)
+     */
+    private $receivedLikes;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PetLike::class, mappedBy="author", orphanRemoval=true)
+     */
+    private $petLikes;
+
     public function __construct()
     {
         $this->pets = new ArrayCollection();
+        $this->createdLikes = new ArrayCollection();
+        $this->receivedLikes = new ArrayCollection();
+        $this->petLikes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -265,6 +283,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setInterests(?string $Interests): self
     {
         $this->Interests = $Interests;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserLike[]
+     */
+    public function getCreatedLikes(): Collection
+    {
+        return $this->createdLikes;
+    }
+
+    public function addCreatedLike(UserLike $createdLike): self
+    {
+        if (!$this->createdLikes->contains($createdLike)) {
+            $this->createdLikes[] = $createdLike;
+            $createdLike->setTarget($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCreatedLike(UserLike $createdLike): self
+    {
+        if ($this->createdLikes->removeElement($createdLike)) {
+            // set the owning side to null (unless already changed)
+            if ($createdLike->getTarget() === $this) {
+                $createdLike->setTarget(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserLike[]
+     */
+    public function getReceivedLikes(): Collection
+    {
+        return $this->receivedLikes;
+    }
+
+    public function addReceivedLike(UserLike $receivedLike): self
+    {
+        if (!$this->receivedLikes->contains($receivedLike)) {
+            $this->receivedLikes[] = $receivedLike;
+            $receivedLike->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReceivedLike(UserLike $receivedLike): self
+    {
+        if ($this->receivedLikes->removeElement($receivedLike)) {
+            // set the owning side to null (unless already changed)
+            if ($receivedLike->getAuthor() === $this) {
+                $receivedLike->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PetLike[]
+     */
+    public function getPetLikes(): Collection
+    {
+        return $this->petLikes;
+    }
+
+    public function addPetLike(PetLike $petLike): self
+    {
+        if (!$this->petLikes->contains($petLike)) {
+            $this->petLikes[] = $petLike;
+            $petLike->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removePetLike(PetLike $petLike): self
+    {
+        if ($this->petLikes->removeElement($petLike)) {
+            // set the owning side to null (unless already changed)
+            if ($petLike->getAuthor() === $this) {
+                $petLike->setAuthor(null);
+            }
+        }
 
         return $this;
     }

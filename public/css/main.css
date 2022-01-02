@@ -112,7 +112,7 @@ body{
   }
 
   #details-content{
-
+    margin-top:40px;
     display:flex;
     flex-direction: column;
     
@@ -185,4 +185,8 @@ body{
     height:50px;
   }
 
+  .hidden{
+
+    position:absolute;
+  }
   

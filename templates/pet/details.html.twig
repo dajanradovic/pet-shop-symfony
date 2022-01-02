@@ -25,10 +25,17 @@
 
   <!-- Expanded image -->
   <img id="expandedImg" style="width:80%; height: 500px;" src="{{asset('uploads/pets_images/' ~ pet.getPhotos()[0])}}" alt="...">
+  <div class="mt-1" > 
+  <div style="position:relative;">
+    <i class="far fa-heart " id="like" style="font-size:25px; cursor:pointer;"></i>
+
+  </div>
+
+  </div>
 
   
 </div>
-<div id="details-content" class="mt-3">
+<div id="details-content">
     <div class="details-subcontent">
       <span class="titles">Name:</span>
       <span class="description-content">{{pet.name}}</span>
@@ -48,7 +55,7 @@
           <span>{{pet.getUser().name}}</span>
       </div>
     </div>
-  </div>
+   </div>
 
 </div>
 

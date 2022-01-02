@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Service\FileUploader;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PetRepository;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -52,6 +54,16 @@ class Pet
      * @ORM\Column(type="json", nullable=true)
      */
     private $photos = [];
+
+    /**
+     * @ORM\OneToMany(targetEntity=PetLike::class, mappedBy="target", orphanRemoval=true)
+     */
+    private $likes;
+
+    public function __construct()
+    {
+        $this->likes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -122,5 +134,35 @@ class Pet
         
         $filteredArray = array_values(array_diff($this->getPhotos() ?? [], $photosToRemove));
         return $filteredArray;
+    }
+
+    /**
+     * @return Collection|PetLike[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(PetLike $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setTarget($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(PetLike $like): self
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getTarget() === $this) {
+                $like->setTarget(null);
+            }
+        }
+
+        return $this;
     }
 }
