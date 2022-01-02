@@ -26,10 +26,11 @@
   <!-- Expanded image -->
   <img id="expandedImg" style="width:80%; height: 500px;" src="{{asset('uploads/pets_images/' ~ pet.getPhotos()[0])}}" alt="...">
   <div class="mt-1" > 
+  {% if app.user %}
   <div style="position:relative;">
     <i class="far fa-heart " id="like" style="font-size:25px; cursor:pointer;"></i>
-
   </div>
+  {% endif %}
 
   </div>
 
