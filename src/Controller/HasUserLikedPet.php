@@ -13,13 +13,15 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class HasUserLikedPet extends AbstractController
 {
-   public function __invoke(Pet $data, Request $request, ManagerRegistry $doctrine): Pet
+   public function __invoke(Pet $data, Request $request, ManagerRegistry $doctrine): Response
    {    
        $user_id = json_decode($request->getContent(), true)['user_id'];
 
        $pet = $doctrine->getRepository(Pet::class)->findIfUserHasLiked($user_id);
-       dd($pet);
-       return $data;
+
+       return $this->json([
+            "user_liked" => $pet ? true : false
+    ]);
    }
 
 }
