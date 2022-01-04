@@ -47,4 +47,19 @@ class PetRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findIfUserHasLiked(int $userId): ?Pet
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT p
+            FROM App\Entity\Pet p
+            INNER JOIN p.likes l
+            WHERE l.author = :id'
+        )->setParameter('id', $userId);
+
+        return $query->getOneOrNullResult();
+    }
 }
+

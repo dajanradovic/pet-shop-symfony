@@ -49,7 +49,7 @@ use App\Controller\UserCountController;
  *                                                     },
  *                                                      "example"={
  *                                                              "test"="dajan"
- *                                                      }   
+ *                                                    }   
  *                                           }
  *                                      }
  *                                  }

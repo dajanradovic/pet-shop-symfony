@@ -13,11 +13,22 @@ use Gedmo\Timestampable\Traits\Timestampable;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+use App\Controller\HasUserLikedPet;
 
 
 /**
  * @ORM\Entity(repositoryClass=PetRepository::class)
- * @ApiResource
+ * @ApiResource(
+ *      itemOperations={
+ *                "get",
+ *                "hasUserLiked"={
+ *                      "method"="POST",
+ *                      "path"="/pet/{id}/has-user-liked",
+ *                      "controller"=HasUserLikedPet::class
+ *                  }
+ *              }
+ * )
  */
 class Pet
 {
@@ -63,6 +74,10 @@ class Pet
 
     /**
      * @ORM\OneToMany(targetEntity=PetLike::class, mappedBy="target", orphanRemoval=true)
+     * @ApiSubresource(
+     *          itemOperations={"get", "post", "delete"}
+     * )
+     *
      */
     private $likes;
 
