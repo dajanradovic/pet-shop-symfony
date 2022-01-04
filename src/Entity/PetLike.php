@@ -5,9 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PetLikeRepository;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use ApiPlatform\Core\Annotation\ApiResource;
+
 
 /**
  * @ORM\Entity(repositoryClass=PetLikeRepository::class)
+ * @ApiResource
  */
 class PetLike
 {
@@ -17,6 +20,7 @@ class PetLike
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
      */
     private $id;
 

@@ -11,11 +11,54 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
-
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+use App\Controller\UserCountController;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @ApiResource(
+ *     normalizationContext={"groups"={"users:read"}},
+ *     collectionOperations={
+ *          "getUserCount"={
+ *                   "method"="GET",
+ *                   "path"="/users/count",
+ *                   "controller"=UserCountController::class,
+ *                   "read"="false",
+ *                   "pagination_enabled"="false",
+ *                   "openapi_context"={
+ *                          "summary"="Get total user count",
+ *                          "description"="Get total user count",
+ *                          "requestBody"={},
+ *                          "parameters"={{
+ *                                  "in"="query",
+ *                                  "name"="page",
+ *                                  "type"="string",
+ *                                  "deprecated"=true
+ *                          }},
+ *                          "responses"={
+ *                              "200"={
+ *                                   "description"="ok",
+ *                                   "content"={
+ *                                          "application/json"={
+ *                                                  "schema"={
+ *                                                      "type"="object",
+ *                                                      "properties"={
+ *                                                              "test"="string"
+ *                                                     },
+ *                                                      "example"={
+ *                                                              "test"="dajan"
+ *                                                      }   
+ *                                           }
+ *                                      }
+ *                                  }
+ *                              }
+ *                          }  
+ *                  }   
+ *                  }
+ *     }
+ * )
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -24,16 +67,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"users:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"users:read"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"users:read"})
      */
     private $roles = [];
 
@@ -50,18 +96,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Pet::class, mappedBy="user", orphanRemoval=true)
+     * @Groups({"users:read"})
      */
     private $pets;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      * @Gedmo\Timestampable(on="create")
+     * @Groups({"users:read"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      * @Gedmo\Timestampable(on="update")
+     * @Groups({"users:read"})
      */
     private $updated_at;
 
@@ -72,16 +121,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"users:read"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @Groups({"users:read"})
      */
     private $Age;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"users:read"})
      */
     private $Interests;
 

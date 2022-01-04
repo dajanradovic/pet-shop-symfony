@@ -5,9 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserLikeRepository;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use ApiPlatform\Core\Annotation\ApiResource;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserLikeRepository::class)
+ * @ApiResource
  */
 class UserLike
 {
@@ -17,7 +20,7 @@ class UserLike
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     */
+          * */
     private $id;
 
     /**

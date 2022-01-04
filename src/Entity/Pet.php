@@ -11,11 +11,13 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Filesystem\Filesystem;
 use Gedmo\Timestampable\Traits\Timestampable;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
  * @ORM\Entity(repositoryClass=PetRepository::class)
+ * @ApiResource
  */
 class Pet
 {
@@ -26,21 +28,25 @@ class Pet
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"users:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"users:read"})
      */
     private $age;
 
     /**
      * @ORM\Column(type="string", length=500)
+     * @Groups({"users:read"})
      */
     private $description;
 
