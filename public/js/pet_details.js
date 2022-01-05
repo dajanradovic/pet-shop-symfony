@@ -1,3 +1,5 @@
+const created = 'CREATED'
+const deleted = 'DELETED'
 
 function myFunction(imgs) {
     // Get the expanded image
@@ -10,26 +12,26 @@ function myFunction(imgs) {
   
   let like = document.getElementById('like');
 
-  let user = document.getElementById('user-info');
-  console.log(user)
-  console.log('user', user.dataset.loggedUser)
-  console.log('pet', user.dataset.currentPet)
-
+  let neededData = document.getElementById('user-info');
+ 
   like.addEventListener('click', (e) =>{
+    let objectToDeal = e.currentTarget;
+    fetch(neededData.dataset.urlHasUserLiked,
+    {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({user_id: neededData.dataset.loggedUser })
+    })
+    .then(res => res.json())
+    .then(res => {
+        console.log(objectToDeal)
 
-
-
-    $.post("demo_test_post.asp",
-  {
-    target: "11",
-    author: "1"
-  },
-  function(data, status){
-    alert("Data: " + data + "\nStatus: " + status);
-  });
-
-      e.currentTarget.classList.toggle('far')
-      e.currentTarget.classList.toggle('fas')
-
+        objectToDeal.classList.toggle('far')
+        objectToDeal.classList.toggle('fas')
+    })
+    .catch(function(res){ console.log(res) })
 
   } )

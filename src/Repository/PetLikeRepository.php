@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\PetLike;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Security;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method PetLike|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +15,13 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PetLikeRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public $security;
+
+    public function __construct(ManagerRegistry $registry, Security $security)
     {
+        $this->security = $security;
         parent::__construct($registry, PetLike::class);
+
     }
 
     // /**
@@ -47,4 +52,11 @@ class PetLikeRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function hasUserLiked(string $target, string $user_id = null): ?PetLike{
+        
+        $user_id = $user_id ?? ($this->security->getUser() ? $this->security->getUser()->getId() : null);
+        
+        return $this->findOneBy(['target' => $target, 'author' => $user_id]);
+    }
 }

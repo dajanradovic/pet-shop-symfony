@@ -2,19 +2,21 @@
 
 namespace App\Entity;
 
+use App\Entity\PetLike;
 use App\Service\FileUploader;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PetRepository;
+use App\Controller\HasUserLikedPet;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Filesystem\Filesystem;
 use Gedmo\Timestampable\Traits\Timestampable;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
-use ApiPlatform\Core\Annotation\ApiResource;
-use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiSubresource;
-use App\Controller\HasUserLikedPet;
+use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
@@ -80,6 +82,8 @@ class Pet
      *
      */
     private $likes;
+
+    private bool $hasUserLiked;
 
     public function __construct()
     {
@@ -185,5 +189,17 @@ class Pet
         }
 
         return $this;
+    }
+
+    public function setHasUserLiked(bool $liked) : self {
+
+        $this->hasUserLiked = $liked;
+
+        return $this;
+    }
+
+    public function getHasUserLiked(): bool{
+
+       return $this->hasUserLiked;
     }
 }

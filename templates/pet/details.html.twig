@@ -27,8 +27,11 @@
   <img id="expandedImg" style="width:80%; height: 500px;" src="{{asset('uploads/pets_images/' ~ pet.getPhotos()[0])}}" alt="...">
   <div class="mt-1" > 
   {% if app.user %}
-  <div style="position:relative;" data-logged-user="{{app.user.id}}" data-current-pet="{{pet.id}}" id="user-info">
-    <i class="far fa-heart " id="like" style="font-size:25px; cursor:pointer;" ></i>
+  <div style="position:relative;" 
+        data-logged-user="{{app.user.id}}" 
+        data-url-has-user-liked="{{path('api_pets_hasUserLiked_item', {id:pet.id})}}" 
+        id="user-info">
+    <i class="{{pet.hasUserLiked ? 'fas fa-heart' : 'far fa-heart'}}" id="like" style="font-size:25px; cursor:pointer;" ></i>
   </div>
   {% endif %}
 
