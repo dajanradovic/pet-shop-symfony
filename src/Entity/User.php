@@ -14,10 +14,13 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Controller\UserCountController;
+use App\Controller\ApiRegistrationController;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields="email", message="There is already an account with this email")
  * @ApiResource(
  *     normalizationContext={"groups"={"users:read"}},
  *     collectionOperations={
@@ -56,7 +59,104 @@ use App\Controller\UserCountController;
  *                              }
  *                          }  
  *                  }   
- *                  }
+ *                  },
+ *             "login"={
+ *                   "method"="POST",
+ *                   "path"="/login_check",
+ *                   "read"="false",
+ *                   "pagination_enabled"="false",
+ *                   "openapi_context"={
+ *                          "summary"="Login",
+ *                          "description"="Login user",
+ *                          "requestBody"={
+ *                                  "content"={
+ *                                      "application/json"={
+ *                                                      "schema"={
+ *                                                      "type"="object",
+ *                                                      "properties"={
+ *                                                              "username"={ 
+ *                                                                  "description"="User email",
+ *                                                                  "type"="string",
+ *                                                                  "require"="true"
+ *                                                                  },
+ *                                                              "password"={
+ *                                                                  "description"="User password",
+ *                                                                  "type"="string",
+ *                                                                  "require"="true"
+ *                                                              }
+ *                                                          },
+ *                                                          "required"="username" 
+ *                                                      }
+ *                                                  }
+ *                                          }
+ *                              },
+ *                            
+ *                          "parameters"={{
+ *                                  "in"="query",
+ *                                  "name"="page",
+ *                                  "type"="string",
+ *                                  "deprecated"=true
+ *                          }},
+ *                          "responses"={
+ *                              "200"={
+ *                                   "description"="ok",
+ *                                   "content"={
+ *                                          "application/json"={
+ *                                                  "schema"={
+ *                                                      "type"="object",
+ *                                                      "properties"={
+ *                                                              "token"="string"
+ *                                                     },
+ *                                                      "example"={
+ *                                                              "token"="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NDE0MDk3NzcsImV4cCI6MTY0MTQxMzM3Nywicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiZGFqYW4rdGVzdDRAbGxveWRzLWRpZ2l0YWwuY29tIn0.hlSjuk359_yC57DJar1symL-ykeZreD9PHtvnGcM1vwHuWFJeCm4mrkEz9KULiB_oWeh_a2TszRym5Nno6XiA8sQG3I6sMCERZUfGCTXo4vk1gKEB8jOtkxrUvLkOdWy7acRPFhiaLOeDRQTfvYJqe9uwQwXWnVfM3GpknQVCq2W16wsVV2MZXY2pHJ3HnIwiagmzHgcvQQcGZAtGgzBdXUgF-VZsUz7p8lEoV8DZEqhy8Svah1oNk0q5PQEB_mQWZsYBcbQuhRThcP44oD1pzmqKCkH1NVbD6x5s1u2r6Di5EkkV35lZCJ7egcUADFGRINvZ-C4S76x6D4DJbnQ-g"
+ *                                                    }   
+ *                                           }
+ *                                      }
+ *                                  }
+ *                              }
+ *                          },  
+ *                  }   
+ *              },
+ *              "register"={
+ *                   "method"="POST",
+ *                   "path"="/register",
+ *                   "read"="false",
+ *                   "controller"=ApiRegistrationController::class,
+ *                   "pagination_enabled"="false",
+ *                   "openapi_context"={
+ *                          "summary"="Login",
+ *                          "description"="Login user",
+ *                          "requestBody"={
+ *                                  "content"={
+ *                                      "application/json"={
+ *                                                      "schema"={
+ *                                                      "type"="object",
+ *                                                      "properties"={
+ *                                                              "email"={ 
+ *                                                                  "description"="User email",
+ *                                                                  "type"="string",
+ *                                                                  "require"="true"
+ *                                                                  },
+ *                                                              "plainPassword"={
+ *                                                                  "description"="User password",
+ *                                                                  "type"="string",
+ *                                                                  "require"="true"
+ *                                                              }
+ *                                                          },
+ *                                                          "required"="username" 
+ *                                                      }
+ *                                                  }
+ *                                          }
+ *                              },
+ *                            
+ *                          "parameters"={{
+ *                                  "in"="query",
+ *                                  "name"="page",
+ *                                  "type"="string",
+ *                                  "deprecated"=true
+ *                          }}
+ *                      }
+ *              }
  *     }
  * )
  */
@@ -73,6 +173,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email
      * @Groups({"users:read"})
      */
     private $email;

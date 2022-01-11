@@ -1,6 +1,3 @@
-const created = 'CREATED'
-const deleted = 'DELETED'
-
 function myFunction(imgs) {
     // Get the expanded image
     let expandImg = document.getElementById("expandedImg");
@@ -15,7 +12,9 @@ function myFunction(imgs) {
   let neededData = document.getElementById('user-info');
  
   like.addEventListener('click', (e) =>{
+   
     let objectToDeal = e.currentTarget;
+
     fetch(neededData.dataset.urlHasUserLiked,
     {
         headers: {
@@ -27,7 +26,6 @@ function myFunction(imgs) {
     })
     .then(res => res.json())
     .then(res => {
-        console.log(objectToDeal)
 
         objectToDeal.classList.toggle('far')
         objectToDeal.classList.toggle('fas')
